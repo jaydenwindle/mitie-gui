@@ -1,0 +1,116 @@
+{% extends "base.html" %}
+{% block body %}
+
+    <div class="container">
+        <br><br>
+        <div class="row"><h1 class="text-center text-white">MITIE AI Trainer</h1></div>
+        <br><br><br />
+        <div id="app">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="panel panel-default train">
+                        <div class="panel-heading">
+                            <h2>Tag Entities</h2>
+                            <p class="trained">Trained: </p>
+                            <div class="entity_choose">
+                            {% raw %}
+                                <template v-for="entity in entities">
+                                    <label>
+                                    <input type="radio" name="entities" v-bind:value="entity" v-model="chosen_entity">
+                                        {{entity}}
+                                    </label>
+                                </template>
+                            {% endraw %}
+                            </div>
+                        </div>
+                        <div class="panel-body" id="tokens">
+                            {% raw %}
+                                <template v-for="(token, i) in input_data[index]">
+                                    <span class="token" v-bind:index="i" v-bind:token="token" v-on:click="token_clicked">
+                                        {{ token }}
+                                    </span>
+                                </template>
+                            {% endraw %}
+                        </div>
+                        <div class="panel-body">
+                            <button class="btn btn-primary" id="generate_code" v-on:click="next">
+                                Next
+                                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12">
+                    <div class="panel panel-default display-code">
+                        <div class="panel-heading"><h2>Exported Code</h2></div> <div class="panel-body">
+                            <pre id="output"></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data: {
+                input_data: {{ input_data | safe }},
+                entities: "{{ entities | safe }}".split(" "),
+                chosen_entity: this.entities,
+                var_name: "{{ outputVar | safe }}",
+                output_pre: '',
+                index: 0,
+            },
+            mounted: function() {
+                output_pre = this.var_name + " = [] \n";
+                $('#output').text(output_pre);
+            },
+            methods: {
+                token_clicked: function(e) {
+                    console.log(e.target.setAttribute('data-entity', this.chosen_entity));
+                },
+                next: function(e) {
+                    var that = this;
+                    output = that.output_pre
+
+                    entities = {}
+                    $('.token').each(function (i, v) {
+                        if ($(v).attr('data-entity') !== undefined) {
+                            ent = $(v).attr('data-entity');
+                            if (entities[ent] !== undefined) {
+                                entities[ent].push(i);
+                            } else {
+                                entities[ent] = [i];
+                            }
+                        }
+                    });
+
+                    // loop through results and turn indexes to code
+                    $.each(entities, function (entity, indexes) {
+                        for (var i = 0, l = indexes.length; i < l; i++) {
+                            var firstIndex = indexes[i];
+                            var lastIndex = firstIndex + 1;
+                            while (indexes[i + 1] == indexes[i] + 1) {
+                                i++;
+                            }
+                            if (indexes[i] != firstIndex) {
+                                // multiple tags in a row
+                                lastIndex = indexes[i] + 1;
+                            }
+                            code = that.var_name + "[" + that.index + "]" + ".add_entity(xrange(" + firstIndex + "," + lastIndex + "), \"" + entity + "\")";
+                            code += " # ";
+                            for (var x = firstIndex; x < lastIndex; x++) {
+                                code += $('.token[index="' + x + '"]').attr('token') + " ";
+                            }
+                            $('#output').append(code + '\n')
+                        }
+                    });
+
+                    $('#output').append('\n')
+                }
+            }
+        });
+    </script>
+
+{% endblock %}

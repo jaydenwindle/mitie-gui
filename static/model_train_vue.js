@@ -1,6 +1,6 @@
 $(document).ready(function () {
     var index = 0;
-    $('#output').append(var_name + " = []" + '\n\n');
+    //$('#output').append(var_name + " = []" + '\n\n');
 
     function load_training_data(results, index, entities) {
         // get tokenized data
@@ -37,9 +37,9 @@ $(document).ready(function () {
 
 
         // set initial code for output
-        variable = var_name;
-        var train_instance = variable + '.append(ner_training_instance(' + JSON.stringify(data) + '))';
-        $('#output').append(train_instance + '\n\n')
+        //variable = var_name;
+        //var train_instance = variable + '.append(ner_training_instance(' + JSON.stringify(data) + '))';
+        //$('#output').append(train_instance + '\n\n')
     }
 
     function generate_checkboxes(entities, checks) {
@@ -90,20 +90,20 @@ $(document).ready(function () {
         $('#output').append('\n')
     }
 
-    load_training_data(input_data, index, entities);
+    //load_training_data(input_data, index, entities);
 
-    $('#generate_code').click(function () {
-        generate_training_code();
-        $("html, body").animate({ scrollTop: 0  }, "fast");
-        if (index < input_data.length - 1) {
-            index++;
-            load_training_data(input_data, index, entities);
-        } else {
-            alert("Done tagging models!");
-            index++;
-            $('.trained').text("Trained: " + index + " / " + entities.length);
-            $('#tokens').html("");
-        }
-    });
+    //$('#generate_code').click(function () {
+        //generate_training_code();
+        //$("html, body").animate({ scrollTop: 0  }, "fast");
+        //if (index < input_data.length - 1) {
+            //index++;
+            //load_training_data(input_data, index, entities);
+        //} else {
+            //alert("Done tagging models!");
+            //index++;
+            //$('.trained').text("Trained: " + index + " / " + entities.length);
+            //$('#tokens').html("");
+        //}
+    //});
 });
 

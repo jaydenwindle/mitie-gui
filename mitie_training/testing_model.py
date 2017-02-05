@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import sys, os
 # Make sure you put the mitielib folder into the python search path.  There are
 # a lot of ways to do this, here we do it programmatically with the following
@@ -9,42 +10,55 @@ sys.path.append('/home/jayden/Documents/Hackathon/McHacks2017/MITIE/mitielib')
 from mitie import *
 import nltk
 
-ner = named_entity_extractor("testmodel1.dat")
+def custom_tokenize(s):
+    s = s.replace(';', ' , ')
+    s = s.replace('/', ' , ')
+    s = mitie.tokenize(s)
+    return s
 
-desc = """Minimum 4 Years of active web development experience in a team atmosphere along with 3 Years active WordPress development
-Knowledge and proficiency in the following application development languages: PHP, HTML5 / CSS3
-Javascript / JQuery
-MySQL
-Advanced knowledge of WordPress including administration and security
-Experience developing custom WordPress themes and plug-ins
-Knowledge of how to interact with RESTful APIs and formats (JSON, XML)
-Understanding of the entire LAMP Stack (Linux/Apache/MySql/PHP)
-Strong knowledge of web application testing methodologies and ability to self-certify developed code for production
-Experience implementing LMS, CRM and e-commerce systems an asset
-Understanding and application of Responsive Design
-Job Type: Full-time
+ner = named_entity_extractor("25_dev.dat")
 
-Salary: $70,000.00 /year
+desc = """
 
-Job Location:
+ What will you do?
+  
+  Implement various application components and perform integration and performance testing.
+  Responsible for development, enhancement and maintenance of client-facing web-components, that may be internally developed or vendor applications.
+  Work with Business Analysts to come up with optimal IT solutions for business problems
+  Perform design and code reviews and prepare technical documentations
+  Work with Information Security to review and implement controls and procedures for securely handling data
+  Develop, code, document and execute unit test, system, integration and acceptance test using different languages and testing tools for functions of high complexity.
+  Develop detailed plans and accurate estimates for completion of build, system testing and implementation phases of project.
+  Provide on-call L4 support of applications, database
+  Ability to work with offshore team members.
+  Validate overall application design and make sure that applicable technologies are being used.
+   
+   What do you need to succeed?
     
-    Ottawa, ON
-    Required education:
-    
-    Bachelor's
-    Required experience:
-    
-    Web Development: 3 years"""
+    Must Have
+    2-5 years of experience in software web development cycle using OO concepts using mainstream languages
+    In depth experience with Microsoft.NET development stack using C#, ASP.NET, ASP.NET MVC
+    Working experience in client scripting languages and framework such as JavaScript, JQuery,  AngularJS, Bootstrap
+    In depth experience in database development using SQL Server 2008/2012
+    Strong SQL skills (on Sybase or SQL Server platforms)
+    Frameworks/APIs: .NET, Web Services
+    OS & Tools: Visual Studio 2010+, Eclipse, SVN, UNIX, & DevXPress
+    Design and develop distributed scalable applications using Microsoft .NET
+    Experience in MS Technologies (ex. MS IIS Server, SSRS, SSIS, etc.)
+
+"""
 
 
-tokens = mitie.tokenize(desc.replace('/', ','))
+tokens = custom_tokenize(desc)
 
 print tokens
 
 entities = ner.extract_entities(tokens)
 
 for e in entities:
-    range = e[0]
+    r = e[0]
     tag = e[1]
-    entity_text = " ".join(tokens[i] for i in range)
-    print ("    " + tag + ": " + entity_text)
+    entity_text = " ".join(tokens[i] for i in r)
+    if len(entity_text) > 1:
+        print ("    " + tag + ": " + entity_text)
+        

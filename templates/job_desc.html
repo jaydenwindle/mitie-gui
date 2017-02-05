@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block body %}
+
+    <div class="container">
+        <br><br>
+        <div class="row"><h1 class="text-center text-white">MITIE Job Description Parser</h1></div>
+        <br><br><br />
+        <div class="panel">
+            <div class="panel-body">
+                <div class="row result">
+                    <div class="col-xs-12">
+                        <h2>Skills: </h2>
+                        <p>{{output_data | safe }}</p>
+                        <h2>Description: </h2>
+                        <p>{{input_data | safe }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

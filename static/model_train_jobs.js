@@ -15,8 +15,8 @@ $(document).ready(function () {
         // clear dom
         $('.list-group').html("");
 
-        // put number trained in header
-        $('.trained').text("Trained: " + index + " / " + results.length);
+        //// put number trained in header
+        //$('.trained').text("Trained: " + index + " / " + results.length);
 
         // add options to dom
         for (var i = 0, l = data.length; i < l; i++) {
@@ -89,15 +89,15 @@ $(document).ready(function () {
     }
 
 
-    $('#generate_code').click(function () {
-        generate_training_code();
-        $("html, body").animate({ scrollTop: 0  }, "fast");
-        index++;
-        load_training_data(results, index, entities);
-    });
+    //$('#generate_code').click(function () {
+        //generate_training_code();
+        //$("html, body").animate({ scrollTop: 0  }, "fast");
+        //index++;
+        //load_training_data(results, index, entities);
+    //});
 
     $('#output').append("# Dataset: " + dataset_name + '\n\n')
-    load_training_data(results, index, entities);
+    //load_training_data(results, index, entities);
 
 });
 

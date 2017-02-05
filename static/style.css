@@ -1,0 +1,86 @@
+.entity_choose label[type="radio"] {
+    margin-right: 15px;
+}
+.entity_choose input {
+    margin-right: 5px;
+}
+
+.token {
+    border: 2px solid #ddd;
+    border-radius: 2px;
+    padding: 2px 5px;
+    margin-right: 5px;
+    margin-bottom: 10px;
+    float: left;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.token[data-entity] {
+    border-color: #9D50BB;
+    background-color: #eee;
+}
+
+.result .token {
+    float: none;
+    display: inline-block;
+    border-color: #9D50BB;
+    background-color: #eee;
+}
+
+.result .token .token {
+    border: none;
+    background-color: transparent;
+    padding: 0;
+    margin: 0;
+}
+
+.train .panel-body .btn, .train .panel-body hr {
+    float: left;
+    clear: left;
+}
+
+body {
+    background: #9D50BB; /* fallback for old browsers */
+    background: -webkit-linear-gradient(to left, #9D50BB , #6E48AA); /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to left, #9D50BB , #6E48AA); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    font-family: 'Roboto'
+}
+
+h1 {
+    color: #fff;
+}
+
+label, p {
+    font-size: 18px;
+}
+
+a {
+    color: #9D50BB; 
+}
+
+a:hover {
+    color: #6E48AA; 
+}
+
+.form-control:focus {
+    border-color: #9D50BB;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(157, 80, 187,.6);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(157, 80, 187,.6);
+}
+
+.btn {
+    border-radius: 22px;
+    background-color: #9D50BB;
+    border: none;
+    font-size: 18px;
+    padding: 8px 20px;
+}
+.btn:hover {
+    background-color: #6E48AA;
+}
+
+#output {
+    width: 100%;
+    font-family: monospace;
+}

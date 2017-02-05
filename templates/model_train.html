@@ -1,54 +1,35 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Training</title>
-    <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+{% extends "base.html" %}
+{% block body %}
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-
-    <!-- Latest compiled and minified JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-
-    <script src="{{ url_for('static', filename='model_train.js')  }}"></script>
-    
     <script>
-        var results = {{ results_json | safe }}
-        var dataset_name = "{{ dataset_name | safe }}"
+        var input_data = {{ input_data | safe }};
+        var entities = "{{ entities | safe }}".split(" ");
+        var var_name = "{{ outputVar | safe }}";
     </script>
 
-    <style>
-
-        .list-group label {
-            margin-left: 15px;
-        }
-        .list-group input {
-            margin-right: 5px;
-        }
-
-    </style>
-
-</head>
-<body>
-
     <div class="container">
-        <div class="row"><h1 class="text-center">AI Trainer</h1></div>
-        <hr>
+        <br><br>
+        <div class="row"><h1 class="text-center text-white">MITIE AI Trainer</h1></div>
+        <br><br><br />
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-xs-12">
                 <div class="panel panel-default train">
                     <div class="panel-heading">
-                        <h2>Add Entities</h2>
+                        <h2>Tag Entities</h2>
                         <p class="trained">Trained: </p>
+                        <div class="entity_choose"></div>
                     </div>
-                    <ul class="list-group"></ul>
+                    <div class="panel-body" id="tokens">
+                    </div>
                     <div class="panel-body">
-                        <button class="btn btn-primary" id="generate_code">Next ></button>
+                        <button class="btn btn-primary" id="generate_code">
+                            Next
+                            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                        </button>
                     </div>
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-xs-12">
                 <div class="panel panel-default display-code">
                     <div class="panel-heading"><h2>Exported Code</h2></div> <div class="panel-body">
                         <pre id="output"></pre>
@@ -57,6 +38,4 @@
             </div>
         </div>
     </div>
-    
-</body>
-</html>
+{% endblock %}

@@ -25,7 +25,7 @@
                         </div>
                         <div class="panel-body" id="tokens">
                             {% raw %}
-                                <template v-for="(token, i) in input_data[index]">
+                                <template v-for="(token, i) in current_entity">
                                     <span class="token" v-bind:index="i" v-bind:token="token" v-on:click="token_clicked">
                                         {{ token }}
                                     </span>
@@ -57,14 +57,15 @@
             data: {
                 input_data: {{ input_data | safe }},
                 entities: "{{ entities | safe }}".split(" "),
+                current_entity: '',
                 chosen_entity: this.entities,
                 var_name: "{{ outputVar | safe }}",
                 output_pre: '',
                 index: 0,
             },
             mounted: function() {
-                output_pre = this.var_name + " = [] \n";
-                $('#output').text(output_pre);
+                this.output_pre.$set(this.var_name + " = [] \n");
+                this.$set(data, 'current_entity', this.entities[index]);
             },
             methods: {
                 token_clicked: function(e) {

@@ -99,10 +99,10 @@ $(document).ready(function () {
             index++;
             load_training_data(input_data, index, entities);
         } else {
-            alert("Done tagging models!");
             index++;
             $('.trained').text("Trained: " + index + " / " + entities.length);
             $('#tokens').html("");
+            alert("Done tagging models!");
         }
     });
 });

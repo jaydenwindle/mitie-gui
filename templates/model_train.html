@@ -63,17 +63,35 @@
             },
             mounted: function() {
                 this.current_entity = this.input_data[this.index];
-                //this.output_pre = "import sys\nsys.path.append('PATH_TO_MITIE')\n\nfrom mitie import *\n\n";
-                this.output_pre += this.var_name + " = []\n\n";
                 this.chosen_entity = this.entities[0];
+                this.add_code_header();
+                this.add_tokens_to_code();
             },
             methods: {
+                add_code_header: function() {
+                    this.output_pre += "import sys\n";
+                    this.output_pre += "from mitie import *\n";
+                    this.output_pre += "MITIE_PATH = 'path/to/mitie' # set this for your system\n";
+                    this.output_pre += "sys.path.append(MITIE_PATH + '/mitielib')\n\n";
+                    this.output_pre += this.var_name + " = []\n\n";
+                },
+                add_code_footer: function() {
+                    this.output_pre += "trainer = ner_trainer('path/to/base/model') # set this for your system\n";
+                    this.output_pre += "trainer.num_threads = 4 # set this for your system as well\n";
+                    this.output_pre += "for entity in " + this.var_name + ":\n";
+                    this.output_pre += "    trainer.add(entity)\n\n";
+                    this.output_pre += "ner = trainer.train() # do training\n\n";
+                    this.output_pre += "ner.save_to_disk('your_model_name.dat') # save to disk\n";
+                },
                 token_clicked: function(e) {
                     if (e.target.hasAttribute('entity')) {
                         e.target.removeAttribute('entity');
                     } else {
                         e.target.setAttribute('entity', this.chosen_entity);
                     }
+                },
+                add_tokens_to_code: function() {
+                    this.output_pre += this.var_name + "[" + this.index +"] = ner_training_instance(" + JSON.stringify(this.current_entity) + ")\n"
                 },
                 next: function(e) {
                     var that = this;
@@ -126,8 +144,10 @@
                     this.output_pre += code;
                     this.index++;
                     this.current_entity = this.input_data[this.index];
+                    this.add_tokens_to_code();
                     if (this.index === this.input_data.length) {
                         alert('Done training!');
+                        this.add_code_footer();
                     }
                 }
             }

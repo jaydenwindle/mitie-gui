@@ -1,4 +1,4 @@
-.entity_choose label[type="radio"] {
+.entity_choose label {
     margin-right: 15px;
 }
 .entity_choose input {
@@ -16,7 +16,7 @@
     cursor: pointer;
 }
 
-.token[data-entity] {
+.token[entity] {
     border-color: #9D50BB;
     background-color: #eee;
 }

@@ -22,14 +22,6 @@ def train():
     outputVar = request.form.get('outputVar')
     return render_template('model_train.html', input_data=input_data, entities=entities, outputVar=outputVar)
 
-@app.route("/train_vue", methods=['POST'])
-def train_vue():
-    input_data = request.form.get('input_data');
-    entities = request.form.get('entities')
-    outputVar = request.form.get('outputVar')
-    return render_template('model_train_vue.html', input_data=input_data, entities=entities, outputVar=outputVar)
-
-
 # commented out to remove from front end. Will use this route to explain training with custom JSON from API
 #@app.route("/train_from_api")
 def train_api():
